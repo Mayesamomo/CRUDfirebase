@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { ToastController } from '@ionic/angular';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { Task } from '../shared/task';
@@ -16,10 +17,12 @@ export class FirebaseService {
 
   constructor(private afs: AngularFirestore,
     private anFauth: AngularFireAuth,
+    private toastr: ToastController,
     ) {
 
   }
 
+  //get all tasks listed 
   getTasks(){
     return new Promise<any>((resolve) => {
       this.anFauth.user.subscribe(currentUser => {
@@ -89,6 +92,16 @@ export class FirebaseService {
     })
   }
 
-  
+  // asychronous method so it doesn't wait for other methods before executing
+  async toastCtrl(message: string, statusColor: string) {
+    const toast = await this.toastr.create({
+      message,
+      position: 'top',
+      color: statusColor,
+      duration: 2000,
+    });
+    // toast alert is invoked
+    toast.present();
+  }
 
 }

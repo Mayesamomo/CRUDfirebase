@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+  // store user's collections to parse their data along with it
   private userCollection: AngularFirestoreCollection<User>;
   private users: Observable<User[]>
   constructor(
@@ -23,6 +24,7 @@ export class AuthService {
     private router: Router,
     private ngZone: NgZone
   ) {
+    // on load , user;s details are pulled 
     this.userCollection = ngFireStore.collection<User>('users');
     this.users = this.userCollection.snapshotChanges().pipe(
       map(actions => {
@@ -34,7 +36,7 @@ export class AuthService {
       })
     )
   }
-//register
+//register a new users
   RegisterUser(value) {
     return new Promise<any>((resolve, reject) => {
       this.angularFireAuth.createUserWithEmailAndPassword(value.email, value.password)
@@ -48,6 +50,7 @@ export class AuthService {
           };
           this.userCollection.doc(res.user.uid).set(user);
           resolve(res);
+          this.toastCtrl('rgistered successfully, please check your inbox to verify your email', 'success');
           this.SendVerificationMail();
           return;
         }).catch((err) => {
@@ -69,10 +72,9 @@ export class AuthService {
             // removes user authentication
           }
           this.ngZone.run(() => {
+            this.toastCtrl('logged in', 'success');
             this.router.navigate(['home']);
           });
-          this.toastCtrl('logged in', 'success');
-
           // resolve();
         }).catch((err) => {
           this.toastCtrl(err, 'danger');
@@ -102,7 +104,7 @@ export class AuthService {
     localStorage.removeItem('user');
     this.router.navigate(['/signin']);
   }
-
+//get current user
   getCurrentUser() {
     if(this.angularFireAuth.currentUser) {
       return this.angularFireAuth.currentUser;
