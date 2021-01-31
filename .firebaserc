@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "socialapp-87b78": {
+      "hosting": {
+        "app": [
+          "socialapp-87b78"
+        ]
+      }
+    }
+  }
+}

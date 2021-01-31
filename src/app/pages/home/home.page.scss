@@ -1,0 +1,14 @@
+.empty-list {
+    font-size: 22px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 40px;
+    color: var(--ion-color-medium);
+  }
+  ion-footer{
+   
+    ion-toolbar{
+      --ion-background-color: transparent;
+      --opacity: 0;
+    }
+  }

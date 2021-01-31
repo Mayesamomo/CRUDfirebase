@@ -1,0 +1,7 @@
+{
+  "name": "Ca_Fire_Crud",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
